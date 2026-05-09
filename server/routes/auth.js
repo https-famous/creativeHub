@@ -4,13 +4,6 @@ const pool = require("../database");  // connects to your PostgreSQL database
 const bcrypt = require("bcrypt");
 
 
-
-
-
-
-
-
-
 router.post("/signup", async (req, res) => {   // Gives a Post request to signup endpoint  respond
   const { email, password } = req.body;           //Takes data sent from Postman/frontend
 
@@ -30,6 +23,59 @@ router.post("/signup", async (req, res) => {   // Gives a Post request to signup
     res.status(500).json({ error: err.message });            // response if there is an error
   }
 });
+
+router.post("/login", async (req, res) => {        // route path for login
+
+  const { email, password } = req.body;
+
+  try {
+
+    // find user by email         
+    const result = await pool.query(
+      "SELECT * FROM users WHERE email = $1",     // runs though the table on the placeholder to locate the particular email
+      [email]                                     //value in that placeholder 
+    );
+
+    // check if user exists
+    if (result.rows.length === 0) {                //checks the stored result of the user, roes cause there are multiple object ,length becomes 
+                                                    //1 if a user is found and 0 if he isn't
+      return res.status(400).json({                  // repsone if user doesn't exsits,The return is important cause if the valus is incorrect it automatically stps the check at that stage 
+        message: "Invalid password"
+      });
+    }
+
+    const user = result.rows[0];                         //if 1  user is stord if 0 nothing happens
+
+    // compare entered password with hashed password
+    const validPassword = await bcrypt.compare(          //compares the password the user drops to the actual user password in the database
+      password,
+      user.password
+    );
+
+    // wrong password
+    if (!validPassword) {
+      return res.status(400).json({     // The return is important cause if the valus is incorrect it automatically stps the check at that stage 
+        message: "Invalid password"
+      });
+    }
+
+    // success
+    res.json({
+      message: "Login successful"
+    });
+
+  } catch (err) {
+
+    res.status(500).json({
+      error: err.message
+    });
+
+  }
+
+});
+
+
+
 
 
 
