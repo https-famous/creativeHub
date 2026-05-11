@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();   // Creates a mini router (used to handle routes separately from main app)
 const pool = require("../database");  // connects to your PostgreSQL database
 const bcrypt = require("bcrypt");
-
+const jwt=require("jsonwebtoken")
 
 router.post("/signup", async (req, res) => {   // Gives a Post request to signup endpoint  respond
   const { email, password } = req.body;           //Takes data sent from Postman/frontend
@@ -60,8 +60,14 @@ router.post("/login", async (req, res) => {        // route path for login
     }
 
     // success
+
+    const token = jwt.sign(     // creates a token
+  { id: user.id },                      // gets the id from the table 
+  "secretkey",                                //is the secret password JWT uses to create and verify tokens.
+  { expiresIn: "1h" }                           // expires in 1 hour 
+);
     res.json({
-      message: "Login successful"
+      message: "Login successful",token
     });
 
   } catch (err) {
