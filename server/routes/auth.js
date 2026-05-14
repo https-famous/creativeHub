@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();   // Creates a mini router (used to handle routes separately from main app)
 const pool = require("../database");  // connects to your PostgreSQL database
 const bcrypt = require("bcrypt");
-const jwt=require("jsonwebtoken")
+const jwt=require("jsonwebtoken");
+const authMiddleware = require("../middleware/authMiddleware");
 
 router.post("/signup", async (req, res) => {   // Gives a Post request to signup endpoint  respond
   const { email, password } = req.body;           //Takes data sent from Postman/frontend
@@ -79,7 +80,6 @@ router.post("/login", async (req, res) => {        // route path for login
   }
 
 });
-
 
 
 
