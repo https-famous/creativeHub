@@ -88,3 +88,5 @@ const loginUser=async (req, res) => {        // route path for login
 module.exports={
     signupUser,loginUser
 }
+
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzc4Nzk5MDUwLCJleHAiOjE3Nzg4MDI2NTB9.q7B2qgKvGTRsaCGUkqsh5A_Muve_5-IhkmBVjSXn0zQ
