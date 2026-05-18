@@ -19,8 +19,30 @@ const createPost = async (req,res) =>{
           error:err.message
         })
     }
-
 }
+    const getMyPosts = async (req, res) => {
+
+  try {
+
+    const result = await pool.query(
+      "SELECT * FROM posts WHERE user_id = $1",
+      [req.user.id]
+    );
+
+    res.json(result.rows);
+
+  } catch (err) {
+
+    res.status(500).json({
+      error: err.message
+    });
+
+  }
+
+};
+   
+
+
 module.exports = {
-  createPost
+  createPost,getMyPosts
 };
