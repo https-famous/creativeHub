@@ -1,3 +1,4 @@
+const { Pool } = require("pg");
 const pool =require("../database")
 
 const createPost = async (req,res) =>{
@@ -40,9 +41,46 @@ const createPost = async (req,res) =>{
   }
 
 };
-   
 
+const updatePost= async (req,res) =>{
+  const {id} = req.params;
+  const {title,content} = req.body;
+
+
+  try {
+    // check if posts exists
+    const post= await pool.query(
+   "SELECT*FROM posts WHERE id=$1 ",
+   [id]
+    );
+
+    // post not found
+    if (post.rows.length===0){
+      res.status(404).json({message:"post not found"})
+  }
+
+  //check owernship
+  if(post.rows[0].user_id !==req.user.id){
+   res.status(403).json({message:"Unauthorized"})
+  }
+
+  //update post
+    await pool.query(
+    "UPDATE posts SET title =$1,  content=$2 WHERE id=$3",
+    [title,content,id]
+    );
+
+   res.json({
+      message: "Post updated successfully"
+    });
+}
+  catch (err){
+    res.status(500).json({
+     error: err.message
+    })
+  };
+};
 
 module.exports = {
-  createPost,getMyPosts
-};
+  createPost,getMyPosts,updatePost
+}

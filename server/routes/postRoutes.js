@@ -4,11 +4,12 @@ const router= express.Router()
 
 
 const {
-    createPost,getMyPosts
+    createPost,getMyPosts,
+    updatePost
 }=require ("../controllers/postcontroller");
 const authMiddleware = require("../middleware/authMiddleware");
 
 router.post("/",authMiddleware,createPost)
 router.get("/", authMiddleware,getMyPosts);
-
+router.put("/:id", authMiddleware,updatePost);
 module.exports= router
