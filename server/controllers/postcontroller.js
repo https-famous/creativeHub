@@ -81,6 +81,54 @@ const updatePost= async (req,res) =>{
   };
 };
 
+const deletepost= async (req,res)=>{
+  const {id} =req.params;
+
+  try{
+    // check if post exists
+    const post =await pool.query(
+      "SELECT* FROM posts WHERE id=$1",
+      [id]
+    );
+
+    if(post.rows.length ===0){
+        return res.status(404).json({
+          message:"Post Not Found"
+        })
+    }
+
+  // check ownership
+  if(post.rows[0].user_id !== req.user.id){
+    return res.status(403).json({
+        message: "Unauthorized"
+      });
+  }
+
+    // delete post
+    await pool.query(
+      "DELETE FROM posts WHERE id = $1",
+      [id]
+    );
+
+    res.json({
+      message: "Post deleted successfully"
+    });
+  }
+  catch(err){
+    res.status(500).json({
+      error: err.message
+    });
+  }
+}
+
+
+
+
+
+
+
+
+
 module.exports = {
-  createPost,getMyPosts,updatePost
+  createPost,getMyPosts,updatePost,deletepost
 }

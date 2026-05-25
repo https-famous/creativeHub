@@ -3,7 +3,7 @@ const cors = require("cors");
 
 const app = express();
 const authMiddleware=require("./middleware/authMiddleware") 
-app.use(express.json());
+app.use(express.json());           //??????
 const postRoutes = require("./routes/postRoutes")
 const authRoutes = require("./routes/auth");   //This import our auth file so the main server can access the different route
 
