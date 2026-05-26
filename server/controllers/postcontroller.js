@@ -26,11 +26,14 @@ const createPost = async (req,res) =>{
   try {
 
     const result = await pool.query(
-      "SELECT * FROM posts WHERE user_id = $1",
-      [req.user.id]
-    );
-
-    res.json(result.rows);
+  `SELECT posts.id,
+          posts.title,
+          posts.content,
+          users.email AS author
+   FROM posts
+   INNER JOIN users
+   ON posts.user_id = users.id`
+);
 
   } catch (err) {
 
