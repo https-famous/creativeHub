@@ -24,15 +24,16 @@ const createPost = async (req,res) =>{
     const getMyPosts = async (req, res) => {
 
   try {
-
-    const result = await pool.query(
+const result = await pool.query(
   `SELECT posts.id,
           posts.title,
           posts.content,
           users.email AS author
    FROM posts
    INNER JOIN users
-   ON posts.user_id = users.id`
+   ON posts.user_id = users.id
+   WHERE posts.id = $1`,
+  [id]
 );
 
   } catch (err) {
