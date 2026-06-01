@@ -9,7 +9,7 @@ const {
     deletepost,
 }=require ("../controllers/postcontroller");
 const {
-    createComment,getCommentsByPost
+    createComment,getCommentsByPost,updateComment
 }=require("../controllers/commentController")
 const authMiddleware = require("../middleware/authMiddleware");
 
@@ -19,5 +19,6 @@ router.put("/:id", authMiddleware,updatePost);
 router.delete("/:id",authMiddleware,deletepost)
 router.post("/:id",authMiddleware,createComment)
 router.get("/:postId", getCommentsByPost)
+router.put("/:id", authMiddleware, updateComment)
 module.exports= router
 

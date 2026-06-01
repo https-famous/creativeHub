@@ -52,8 +52,52 @@ const getCommentsByPost =async (req,res)=>{
 }
 }
 
+const updateComment = async (req, res) => {
+
+  const { id } = req.params;
+  const { content } = req.body;
+
+  try {
+
+    const comment = await pool.query(
+      "SELECT * FROM comments WHERE id = $1",
+      [id]
+    );
+
+    if (comment.rows.length === 0) {
+      return res.status(404).json({
+        message: "Comment not found"
+      });
+    }
+
+    if (comment.rows[0].user_id !== req.user.id) {
+      return res.status(403).json({
+        message: "Unauthorized"
+      });
+    }
+
+    await pool.query(
+      "UPDATE comments SET content = $1 WHERE id = $2",
+      [content, id]
+    );
+
+    res.json({
+      message: "Comment updated successfully"
+    });
+
+  } catch (err) {
+
+    res.status(500).json({
+      error: err.message
+    });
+
+  }
+
+};
+
 
 module.exports = {
   createComment,
-  getCommentsByPost
+  getCommentsByPost,
+  updateComment
 };
