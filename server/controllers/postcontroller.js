@@ -32,7 +32,7 @@ const result = await pool.query(
    FROM posts
    INNER JOIN users
    ON posts.user_id = users.id
-   WHERE posts.id = $1`,
+   WHERE posts.id = $1`,  
   [id]
 );
 

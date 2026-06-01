@@ -4,7 +4,7 @@ const createComment = async (req, res) => {
 
   const { content } = req.body;
 
-  const { postId } = req.params;
+  const { postId } = req.params; 
 
   try {
 
@@ -27,6 +27,11 @@ const createComment = async (req, res) => {
   }
 
 };
+
+
+
+
+
 
 module.exports = {
   createComment

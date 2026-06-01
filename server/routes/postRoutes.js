@@ -19,3 +19,6 @@ router.put("/:id", authMiddleware,updatePost);
 router.delete("/:id",authMiddleware,deletepost)
 router.post("/:id",authMiddleware,createComment)
 module.exports= router
+
+
+console.log(createComment)
