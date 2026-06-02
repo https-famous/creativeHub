@@ -94,10 +94,52 @@ const updateComment = async (req, res) => {
   }
 
 };
+const deleteComment= async (req,res)=>{
+  const {id}=req.params
+
+
+
+    try {
+
+    const comment = await pool.query(
+      "SELECT * FROM comments WHERE id = $1",
+      [id]
+    );
+
+    if (comment.rows.length === 0) {
+      return res.status(404).json({
+        message: "Comment not found"
+      });
+    }
+
+    if (comment.rows[0].user_id !== req.user.id) {
+      return res.status(403).json({
+        message: "Unauthorized"
+      });
+    }
+
+    await pool.query(
+      "DELETE FROM comments WHERE id = $1",
+      [id]
+    );
+
+    res.json({
+      message: "Comment deleted successfully"
+    });
+}
+catch (err) {
+
+    res.status(500).json({
+      error: err.message
+    });
+
+  }
+};
 
 
 module.exports = {
   createComment,
   getCommentsByPost,
-  updateComment
+  updateComment,
+  deleteComment
 };
