@@ -23,7 +23,7 @@ function Signup() {                  // This creates our signup page component, 
       const response =await api.post("/auth/signup", form);
       console.log(response.data);
     }
-    catch(error){
+    catch(err){
        console.log(err.response?.data || err.message);
     }
   };

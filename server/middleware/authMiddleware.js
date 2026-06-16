@@ -4,7 +4,8 @@ const jwt=require("jsonwebtoken");       // Requires  the json webtoken and stor
 const authMiddleware = (req, res, next) => {
 
     // get token from request headers
-    const token = req.header("Authorization");
+    const authHeader = req.header("Authorization");
+    const token = authHeader && authHeader.split(" ")[1];
 
     // no token
     if (!token) {
