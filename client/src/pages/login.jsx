@@ -1,5 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import api from "../services/api";
+
+
+
 
 function Login() {
   const [form, setForm] = useState({
@@ -13,15 +17,16 @@ function Login() {
       [e.target.name]: e.target.value
     });
   };
-
+ const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
+     
 
     try {
       const res = await api.post("/auth/login", form);
       localStorage.setItem("token", res.data.token);                       //Save the JWT token in the browser's local storage under the name "token".
-
-      console.log(res.data);
+      navigate("/home");
+  
     } catch (err) {
       console.log(err.response?.data || err.message);
     }
@@ -50,5 +55,6 @@ function Login() {
     </div>
   );
 }
+
 
 export default Login;
