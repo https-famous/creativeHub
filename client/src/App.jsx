@@ -1,13 +1,30 @@
-import Signup from "./pages/signup";
-import Login from "./pages/login";
+import { BrowserRouter, Routes, Route } from "react-router-dom";  //BrowserRouter enables routing in our React app , Routes the containers that holds all our routes, Route 
 
-function App() {
-  return (
-    <div>
-      <h1>CreativeHub</h1>
-      <Signup />
-      <Login />
-    </div>
+import Signup from "./pages/signup";                 // imports fom particular files 
+import Login from "./pages/login";
+import Home from "./pages/Home";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+function App() {                             //App component 
+  return (              
+    <BrowserRouter>               
+      <Routes>
+
+        <Route path="/signup" element={<Signup />} />                        
+
+        <Route path="/login" element={<Login />} />
+
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
+
+      </Routes>
+    </BrowserRouter>
   );
 }
 
