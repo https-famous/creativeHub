@@ -26,7 +26,7 @@ function Login() {
       const res = await api.post("/auth/login", form);
       localStorage.setItem("token", res.data.token);                       //Save the JWT token in the browser's local storage under the name "token".
       navigate("/home");
-  
+    
     } catch (err) {
       console.log(err.response?.data || err.message);
     }
