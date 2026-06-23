@@ -21,5 +21,5 @@ router.post("/:id",authMiddleware,createComment)
 router.get("/:postId", getCommentsByPost)
 router.put("/:id", authMiddleware, updateComment)
 router.delete("/:id", authMiddleware, deleteComment);
-module.exports= router
+module.exports= router;
 
