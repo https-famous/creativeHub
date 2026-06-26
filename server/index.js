@@ -5,7 +5,7 @@ const express = require("express");
 const app = express();
 const authMiddleware=require("./middleware/authMiddleware") 
 app.use(cors());                        //Allows frontend to talk to backend 
-app.use(express.json());           //??????
+app.use(express.json());           // tells Express to read incoming request bodies that are in JSON format and convert them into a JavaScript object 
 const postRoutes = require("./routes/postRoutes")
 const authRoutes = require("./routes/auth");   //This import our auth file so the main server can access the different route
 const commentRoutes=   require("./routes/postRoutes")
