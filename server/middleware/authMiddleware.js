@@ -1,5 +1,5 @@
-const { response } = require("express");
-const jwt=require("jsonwebtoken");       // Requires  the json webtoken and stores it into jwt
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
 
 const authMiddleware = (req, res, next) => {
 
@@ -17,7 +17,7 @@ const authMiddleware = (req, res, next) => {
     try {
 
         // verify token
-        const verified = jwt.verify(token, "secretkey");
+        const verified = jwt.verify(token, process.env.JWT_SECRET);
 
         // save decoded user data
         req.user = verified;
@@ -34,4 +34,5 @@ const authMiddleware = (req, res, next) => {
     }
 
 };
-    module.exports=authMiddleware;
+
+module.exports = authMiddleware;
