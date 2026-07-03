@@ -68,14 +68,14 @@ const loginUser = async (req, res) => {
     });
 
   } catch (err) {
-
-    res.status(500).json({ 
-    error: err.message,
-    detail: err.detail,
-    code: err.code
+     console.log("FULL ERROR:", err);
+  res.status(500).json({ 
+    error: err.message || "unknown error",
+    detail: err.detail || "no detail",
+    code: err.code || "no code",
+    stack: err.stack
   });
-
-  }
+      }
 
 }
 
