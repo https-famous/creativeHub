@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 const { Pool } = require("pg");                   // Import the postgreSql Library, // pool=A tool that managea database connection
 
 const pool = new Pool({                                 //Creates a connection to your database Node.js connects me to PostgreSQL using these details
