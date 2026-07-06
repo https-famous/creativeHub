@@ -1,6 +1,11 @@
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
+console.log("ENV CHECK:", {
+  DATABASE_URL: process.env.DATABASE_URL ? "EXISTS" : "MISSING",
+  JWT_SECRET: process.env.JWT_SECRET ? "EXISTS" : "MISSING",
+  PORT: process.env.PORT ? "EXISTS" : "MISSING"
+});
 const cors = require("cors");
 const express = require("express");
 
