@@ -8,7 +8,7 @@ function Signup() {
   const [form, setForm] = useState({ email: "", password: "" });      //Tracks what the user is typing in both inputs. Starts empty.
   const [error, setError] = useState("");                              //error — stores an error message to show the user if something goes wrong. success — stores a success message after account is created. loading — tracks whether the form is currently submitting so you can disable the button.
   const [success, setSuccess] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);                     //a React function that gives a component memory. Normal variables reset every time the component re-renders, but useState values persist and trigger a re-render when changed. This line is basically saying when the components first load 
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -29,12 +29,12 @@ function Signup() {
     try {
       await api.post("/auth/signup", form);
       setSuccess("Account created! Redirecting to login…");
-      setTimeout(() => navigate("/login"), 1500);
+      setTimeout(() => navigate("/login"), 1500);   //Shows the success message then waits 1.5 seconds before redirecting to login.
     } catch (err) {
       setError(err.response?.data?.error || "Something went wrong. Try again.");
     } finally {
       setLoading(false);
-    }
+    }             //Disables the button and shows "Creating account…" so the user knows something is happening.
   };
 
   return (
@@ -60,8 +60,8 @@ function Signup() {
             Already have one? <Link to="/login">Sign in</Link>
           </p>
 
-          {error   && <div className="auth-message error">{error}</div>}
-          {success && <div className="auth-message success">{success}</div>}
+          {error   && <div className="auth-message error">{error}</div>}     {/* this line is a medium to server as mesage to user to see if an error occurred when trying to fill the form */}
+          {success && <div className="auth-message success">{success}</div>} {/*conditional rendering stating if the left side is true render the right side  */}
 
           <form onSubmit={handleSubmit} noValidate>
             <div className="field">
@@ -90,7 +90,7 @@ function Signup() {
               />
             </div>
 
-            <button className="btn-primary" type="submit" disabled={loading}>
+            <button className="btn-primary" type="submit" disabled={loading}> {/*disabled={loading} prevents double submitting. The text switches based on whether it's loading or not — a ternary operator doing a simple if/else inline.*/}
               {loading ? "Creating account…" : "Create account"}
             </button>
           </form>

@@ -20,13 +20,14 @@ function Posts({ refresh, currentUserId, showToast }) {
 
   useEffect(() => { fetchPosts(); }, [refresh]);
 
-  const handleDeleted = (id) => {
-    setPosts((prev) => prev.filter((p) => p.id !== id));
+  const handleDeleted = (id) => {           
+    setPosts((prev) => prev.filter((p) => p.id !== id));                 //prev is the current posts array before the update, goes through every post p, and keeps only the ones whose id is NOT equal to the deleted id
   };
 
-  const handleUpdated = (id, updated) => {
+  const handleUpdated = (id, updated) => {          
     setPosts((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, ...updated } : p))
+      prev.map((p) => (p.id === id ? { ...p, ...updated } : p))               /*a ternary:
+if this post's id matches the one being edited → return a new object that merges the old post with the updated fields*/
     );
   };
 
@@ -55,7 +56,7 @@ function Posts({ refresh, currentUserId, showToast }) {
         <span className="feed-count">{posts.length} posts</span>
       </div>
 
-      {posts.map((post) => (
+      {posts.map((post) => (                                                  // loops through every post in the posts array and returns a PostCard component for each one. So if you have 5 posts in state, this produces 5 PostCards on the page.
         <PostCard
           key={post.id}
           post={post}
