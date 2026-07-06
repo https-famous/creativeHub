@@ -1,6 +1,7 @@
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
+
 const pool = require("../database");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -70,14 +71,16 @@ const loginUser = async (req, res) => {
     });
 
   } catch (err) {
-     console.log("FULL ERROR:", err);
+  console.log("SIGNUP ERROR CODE:", err.code);
+  console.log("SIGNUP ERROR MESSAGE:", err.message);
+  console.log("SIGNUP ERROR DETAIL:", err.detail);
+  console.log("SIGNUP ERROR FULL:", JSON.stringify(err, null, 2));
   res.status(500).json({ 
-    error: err.message || "unknown error",
-    detail: err.detail || "no detail",
+    error: err.message || "unknown",
     code: err.code || "no code",
-    stack: err.stack
+    detail: err.detail || "no detail"
   });
-      }
+}
 
 }
 
