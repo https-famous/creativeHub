@@ -13,7 +13,8 @@ function PostCard({ post, currentUserId, onDeleted, onUpdated, showToast }) {
   const [deleting, setDeleting] = useState(false);
 
   const initial = post.author ? post.author[0].toUpperCase() : "U";
-  const isOwner = post.user_id === currentUserId;
+  // convert both to numbers to avoid type mismatch ("1" !== 1)
+  const isOwner = Number(post.user_id) === Number(currentUserId);
 
   // fetch comments when expanding
   useEffect(() => {
@@ -21,7 +22,7 @@ function PostCard({ post, currentUserId, onDeleted, onUpdated, showToast }) {
     const load = async () => {
       setLoadingComments(true);
       try {
-        const res = await api.get(`/posts/${post.id}`);
+        const res = await api.get(`/comments/${post.id}`);
         setComments(res.data);
       } catch (err) {
         console.error(err);
@@ -36,7 +37,7 @@ function PostCard({ post, currentUserId, onDeleted, onUpdated, showToast }) {
     if (!commentText.trim()) return;
     setSendingComment(true);
     try {
-      const res = await api.post(`/posts/${post.id}`, { content: commentText });
+      const res = await api.post(`/comments/${post.id}`, { content: commentText });
       setComments((prev) => [...prev, res.data]);
       setCommentText("");
     } catch (err) {
