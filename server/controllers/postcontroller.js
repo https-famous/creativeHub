@@ -29,6 +29,7 @@ const createPost = async (req,res) =>{
       `SELECT posts.id,
               posts.title,
               posts.content,
+              posts.user_id,
               users.email AS author
        FROM posts
        INNER JOIN users
