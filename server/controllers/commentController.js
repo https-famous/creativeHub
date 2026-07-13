@@ -4,7 +4,7 @@ const createComment = async (req, res) => {
 
   const { content } = req.body;
 
-  const { postId } = req.params; 
+  const { id: postId } = req.params; 
 
   try {
 
