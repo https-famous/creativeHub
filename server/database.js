@@ -3,12 +3,12 @@ if (process.env.NODE_ENV !== "production") {
 }
 const { Pool } = require("pg");
 
-console.log("CREATING POOL WITH:", process.env.DATABASE_URL ? "DATABASE_URL" : "individual credentials");
+
 
 const pool = process.env.DATABASE_URL
   ? new Pool({
       connectionString: process.env.DATABASE_URL,
-      ssl: { rejectUnauthorized: false }
+      ssl: { rejectUnauthorized: false }             //Tells the connection to use SSL (encrypted connection) but skip certificate verification.
     })
   : new Pool({
       user: process.env.DB_USER,
@@ -18,8 +18,6 @@ const pool = process.env.DATABASE_URL
       port: process.env.DB_PORT,
     });
 
-pool.on("error", (err) => {
-  console.log("POOL ERROR:", err.message, err.code);
-});
+
 
 module.exports = pool;
